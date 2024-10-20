@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rpc-common" />
+        <module name="rpc-easy" />
+        <module name="comsumer" />
+        <module name="provider" />
       </profile>
     </annotationProcessing>
   </component>
