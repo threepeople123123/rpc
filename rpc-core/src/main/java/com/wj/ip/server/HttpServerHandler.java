@@ -1,11 +1,12 @@
 package com.wj.ip.server;
 
 
+import com.wj.ip.RpcApplication;
 import com.wj.ip.model.RpcRequest;
 import com.wj.ip.model.RpcResponse;
 import com.wj.ip.registry.LocalRegistry;
-import com.wj.ip.serializer.JdkSerializer;
 import com.wj.ip.serializer.Serializer;
+import com.wj.ip.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -22,7 +23,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
-        final Serializer serializer = new JdkSerializer();
+        Serializer instance = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         // 记录日志
         System.out.println("Received request: " + request.method() + " " + request.uri());
@@ -32,7 +33,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
             byte[] bytes = body.getBytes();
             RpcRequest rpcRequest = null;
             try {
-                rpcRequest = serializer.deserialize(bytes, RpcRequest.class);
+                rpcRequest = instance.deserialize(bytes, RpcRequest.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -42,7 +43,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
             // 如果请求为 null，直接返回
             if (rpcRequest == null) {
                 rpcResponse.setMessage("rpcRequest is null");
-                doResponse(request, rpcResponse, serializer);
+                doResponse(request, rpcResponse, instance);
                 return;
             }
 
@@ -61,7 +62,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 rpcResponse.setException(e);
             }
             // 响应
-            doResponse(request, rpcResponse, serializer);
+            doResponse(request, rpcResponse, instance);
         });
     }
 
@@ -77,7 +78,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 .putHeader("content-type", "application/json");
         try {
             // 序列化
-            byte[] serialized = serializer.serialize(rpcResponse);
+            byte[] serialized =  serializer.serialize(rpcResponse);
             httpServerResponse.end(Buffer.buffer(serialized));
         } catch (IOException e) {
             e.printStackTrace();

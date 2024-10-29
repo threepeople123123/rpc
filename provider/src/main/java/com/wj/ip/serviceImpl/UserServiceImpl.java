@@ -7,7 +7,7 @@ import com.wj.ip.service.UserService;
 public class UserServiceImpl implements UserService {
     @Override
     public User getUser(User user) {
-
+        user.setName("wj");
         return user;
     }
 }

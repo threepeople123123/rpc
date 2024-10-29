@@ -1,0 +1,3 @@
+jdk=com.wj.ip.serializer.JdkSerializer
+hessian=com.wj.ip.serializer.HessianSerializer
+

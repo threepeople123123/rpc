@@ -20,11 +20,11 @@
             <artifactId>rpc-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>com.wj.ip</groupId>
             <artifactId>rpc-easy</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>cn.hutool</groupId>

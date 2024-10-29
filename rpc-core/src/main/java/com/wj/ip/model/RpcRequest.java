@@ -1,5 +1,6 @@
 package com.wj.ip.model;
 
+import com.wj.ip.constant.RpcConstant;
 import lombok.*;
 
 import java.io.Serializable;
@@ -24,6 +25,11 @@ public class RpcRequest implements Serializable {
      * 方法名称
      */
     private String methodName;
+
+    /**
+     * 版本信息
+     */
+    private String serviceVersion = RpcConstant.DEFAULT_SERVICE_VERSION;
 
     /**
      * 参数类型列表

@@ -1,0 +1,2 @@
+json=com.wj.ip.serializer.JsonSerializer
+kryo=com.wj.ip.serializer.KryoSerializer

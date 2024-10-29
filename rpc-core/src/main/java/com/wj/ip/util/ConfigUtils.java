@@ -4,6 +4,7 @@ package com.wj.ip.util;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.Props;
 
+
 /**
  * 配置工具类
  */
@@ -37,6 +38,6 @@ public class ConfigUtils {
         }
         configFileBuilder.append(".properties");
         Props props = new Props(configFileBuilder.toString());
-        return props.autoLoad(tClass, prefix);
+        return props.toBean(tClass, prefix);
     }
 }

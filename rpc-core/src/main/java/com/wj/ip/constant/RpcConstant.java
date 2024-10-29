@@ -13,4 +13,16 @@ public interface RpcConstant {
      * 默认配置文件加载前缀
      */
     String DEFAULT_CONFIG_PREFIX = "rpc";
+
+    /**
+     * 此系统自定义
+     */
+    String WJ_CONFIG_PREFIX = "wj";
+
+    /**
+     * 默认服务版本
+     */
+    String DEFAULT_SERVICE_VERSION = "1.0";
+
+
 }

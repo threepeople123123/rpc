@@ -7,6 +7,7 @@ import com.wj.ip.model.RpcResponse;
 import com.wj.ip.model.User;
 import com.wj.ip.serializer.JdkSerializer;
 import com.wj.ip.serializer.Serializer;
+import com.wj.ip.serializer.SerializerFactory;
 import com.wj.ip.service.UserService;
 
 import java.io.IOException;
@@ -29,14 +30,15 @@ public class UserServiceProxy implements UserService {
                 .args(new Object[]{user})
                 .build();
         try {
-            byte[] bodyBytes = serializer.serialize(rpcRequest);
+            Serializer instance = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
+            byte[] bodyBytes =  instance.serialize(rpcRequest);
             byte[] result;
             try (HttpResponse httpResponse = HttpRequest.post("http://localhost:8080")
                     .body(bodyBytes)
                     .execute()) {
                 result = httpResponse.bodyBytes();
             }
-            RpcResponse rpcResponse = serializer.deserialize(result, RpcResponse.class);
+            RpcResponse rpcResponse = instance.deserialize(result, RpcResponse.class);
             return (User) rpcResponse.getData();
         } catch (IOException e) {
             e.printStackTrace();

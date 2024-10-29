@@ -1,6 +1,9 @@
 package com.wj.ip;
 
 import com.wj.ip.config.RpcConfig;
+import com.wj.ip.model.User;
+import com.wj.ip.proxy.ServiceProxyFactory;
+import com.wj.ip.service.UserService;
 import com.wj.ip.util.ConfigUtils;
 
 /**
@@ -13,6 +16,16 @@ import com.wj.ip.util.ConfigUtils;
 public class ConsumerExample {
 
     public static void main(String[] args) {
+
+        // 获取代理
+        UserService userService = ServiceProxyFactory.getProxy(UserService.class);
+        User user = new User();
+        user.setName("wj");
+
+        // 获取对象
+        User newUser = userService.getUser(user);
+
+
         RpcConfig rpc = ConfigUtils.loadConfig(RpcConfig.class, "wj");
         System.out.println(rpc);
     }
